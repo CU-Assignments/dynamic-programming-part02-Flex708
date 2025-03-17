@@ -1,0 +1,24 @@
+class Solution {
+    private:
+    int solve(vector<int> &coin,int sum,int index,vector<vector<int>> &dp){
+        if(sum == 0) return 1;
+        if(dp[sum][index] != -1) return dp[sum][index];
+        
+        int ans = 100000;
+        int n = coin.size();
+        for(int i = index;i < n;i++){
+            if(sum-coin[i] >= 0)
+                ans = min(ans,solve(coin,sum-coin[i],i,dp) + 1);
+            
+        }
+        return dp[sum][index] = ans;
+    }
+public:
+    int coinChange(vector<int>& coins, int &sum) {
+        int n = coins.size();
+        vector<vector<int>> dp(sum+1,vector<int>(n,-1));
+        int ans = solve(coins,sum,0,dp);
+        if(ans == 100000) return -1;
+        return ans - 1;
+    }
+};
