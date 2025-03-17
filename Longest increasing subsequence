@@ -1,0 +1,22 @@
+class Solution {
+    private:
+    void binarySearch(vector<int>&ans,int target,int low,int high){
+        if(low>high){
+            if(low<ans.size()) ans[low]=target;
+            else ans.push_back(target);
+            return;
+        }
+        int mid=(low+high)/2;
+        if(ans[mid]==target) return;
+        else if(ans[mid]>target) binarySearch(ans,target,low,mid-1);
+        else binarySearch(ans,target,mid+1,high);
+    }
+public:
+    int lengthOfLIS(vector<int>& nums) {
+        vector<int>ans={nums[0]};
+        for(int i=1;i<nums.size();i++){
+            binarySearch(ans,nums[i],0,ans.size()-1);
+        }
+        return ans.size();
+    }
+};
